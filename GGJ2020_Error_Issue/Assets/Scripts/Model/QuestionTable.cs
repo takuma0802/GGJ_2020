@@ -22,6 +22,6 @@ public class Answer
 [System.Serializable]
 public class QuestionMaster
 {
+  public List<string> Answer;
   public string Qustion;
-  public List<int> Answer;
 }

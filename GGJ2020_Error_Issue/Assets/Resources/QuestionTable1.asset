@@ -16,11 +16,37 @@ MonoBehaviour:
     Answers:
     - ;
     - '"'
-    - )
+    - ()
   Questions:
-  - Qustion: Debug.Log("Hello World")
-    Answer: 00000000
-  - Qustion: Debug.Log("Hello World);
-    Answer: 01000000
-  - Qustion: Debug.Log"Hello World");
-    Answer: 02000000
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+  - Answer:
+    - '"'
+    Qustion: Debug.Log("Hello World);
+  - Answer:
+    - ()
+    Qustion: Debug.Log"Hello World");
+  - Answer:
+    - ;
+    - '"'
+    Qustion: Debug.Log"Hello World)
+  - Answer:
+    - ;
+    - ()
+    Qustion: Debug.Log"Hello World"
+  - Answer:
+    - ;
+    Qustion: get { return isCorrectAnswer}
+  - Answer:
+    - ;
+    Qustion: get { return isCorrectAnswer}
+  - Answer:
+    - ()
+    Qustion: Debug.Log"Hello World");
+  - Answer:
+    - ()
+    Qustion: Debug.Log"Hello World");
+  - Answer:
+    - ()
+    Qustion: Debug.Log"Hello World");
