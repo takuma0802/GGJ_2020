@@ -9,7 +9,7 @@ using UnityEngine;
 public class QuestionTable : ScriptableObject
 {
   public Answer Answer;
-  public List<Question> Questions = new List<Question>();
+  public List<QuestionMaster> Questions = new List<QuestionMaster>();
 }
 
 [System.Serializable]
@@ -20,7 +20,7 @@ public class Answer
 
 //System.Serializableを設定しないと、データを保持できない(シリアライズできない)ので注意
 [System.Serializable]
-public class Question
+public class QuestionMaster
 {
   public string Qustion;
   public List<int> Answer;
