@@ -15,37 +15,41 @@ using UnityEngine.UI;
 
 public class ScorePresenter : BaseView
 {
-    private int allScore;
-    public int addScoreValue, substractScoreValue;
-    public Text scoreTestText;
-    public Button addScoreBtn, subtractScoreBtn;
-    void Start()
+    public ReactiveProperty<int> AllScore = new IntReactiveProperty(0);
+    public int CorrectAnsValue, CorrectAllAnsValue, MistakeValue, NotEnoughValue;
+    public Text scoreText;
+
+    public void Initialize(IObservable<AnswerResult> answerObserbable, GameManager manager)
     {
-
-        AddScoreSubscrive();
-
-        SubtractScoreSubscribe();
-
-
+        scoreText.text = "0";
+        AllScore.Value = 0;
+        ScoreSubscribe(answerObserbable,manager);
     }
-    public void AddScoreSubscrive()
+
+    public void ScoreSubscribe(IObservable<AnswerResult> answerObserbable, GameManager manager)
     {
-        subscriptions.Add
-        (
-            Observable.Timer(TimeSpan.FromMilliseconds(0))
-                .Do(_ => allScore += addScoreValue)
-                .Do(_ => scoreTestText.text = allScore.ToString())
-                .Subscribe()
-        );
-    }
-    public void  SubtractScoreSubscribe()
-    {
-        subscriptions.Add
-        (
-            Observable.Timer(TimeSpan.FromMilliseconds(0))
-                .Do(_ => allScore -= substractScoreValue)
-                .Do(_ => scoreTestText.text = allScore.ToString())
-                .Subscribe()
-        );
+        answerObserbable.Subscribe(result =>
+        {
+            switch(result)
+            {
+                case AnswerResult.SelectCorrectAnswer:
+                    AllScore.Value += CorrectAnsValue;
+                    break;
+                case AnswerResult.Mistake:
+                    AllScore.Value += MistakeValue;
+                    break;
+                case AnswerResult.CorrectAllAnswer:
+                    AllScore.Value += CorrectAllAnsValue;;
+                    break;
+                case AnswerResult.NotEnoughAnswer:
+                    AllScore.Value += NotEnoughValue;
+                    break;
+            }
+        });
+
+        AllScore
+            .Where(_ => manager.CurrentGameState.Value == GameState.InGame)
+            .Subscribe(score => scoreText.text = score.ToString())
+            .AddTo(this);
     }
 }

@@ -21,32 +21,42 @@ MonoBehaviour:
   - Answer:
     - ;
     Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
   - Answer:
     - '"'
     Qustion: Debug.Log("Hello World);
+    CorrectText: Debug.Log("Hello World<color=#ff0000>"</color>);
   - Answer:
     - ()
     Qustion: Debug.Log"Hello World");
+    CorrectText: 
   - Answer:
     - ;
     - '"'
     Qustion: Debug.Log"Hello World)
+    CorrectText: 
   - Answer:
     - ;
     - ()
     Qustion: Debug.Log"Hello World"
+    CorrectText: 
   - Answer:
     - ;
     Qustion: get { return isCorrectAnswer}
+    CorrectText: 
   - Answer:
     - ;
     Qustion: get { return isCorrectAnswer}
+    CorrectText: 
   - Answer:
     - ()
     Qustion: Debug.Log"Hello World");
+    CorrectText: 
   - Answer:
     - ()
     Qustion: Debug.Log"Hello World");
+    CorrectText: 
   - Answer:
     - ()
     Qustion: Debug.Log"Hello World");
+    CorrectText: 

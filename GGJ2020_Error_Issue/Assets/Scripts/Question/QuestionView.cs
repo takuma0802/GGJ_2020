@@ -21,21 +21,24 @@ public class QuestionView : BaseView
         this.RowColorImage.color = NonActiveRowColor;
     }
 
-    public void SetQuestionText(int row, string question)
+    public void SetQuestionTextAndRow(int row, string question)
     {
         this.RowText.text = row.ToString();
+        SetQuestionText(question, false);
+    }
+
+    public void SetQuestionText(string question, bool correct)
+    {
         this.QuestionText.text = question;
     }
 
     public void ActivateRowColor()
     {
         this.RowColorImage.color = ActiveRowColor;
-        Debug.Log("Active:" + this.gameObject.name);
     }
 
     public void NonActivateRowColor()
     {
         this.RowColorImage.color = NonActiveRowColor;
-        Debug.Log("NonActive:" + this.gameObject.name);
     }
 }
