@@ -17,6 +17,8 @@ public class TitlePresenter : BaseView
 {
     private int upCount = 1500;
     private int underCount = -1500;
+    private int rightCount = 1000;
+    private int leftCount = -1000;
     [SerializeField] Text countDownText;
 
     [Header("Panel")]
@@ -42,10 +44,11 @@ public class TitlePresenter : BaseView
     }
     void InitView()
     {
-        titlePanel.DOLocalMove (new Vector3(0,0,0),1.0f);
-        firstHowToPlayPanel.transform.localPosition = new Vector3(0,upCount,0);
-        secondHowToPlayPanel.transform.localPosition = new Vector3(0,upCount,0);
-        resultPanel.transform.localPosition = new Vector3(0,upCount,0);
+        titlePanel.transform.localPosition = new Vector3(0,upCount,0);
+        titlePanel.DOLocalMove (new Vector3(0,0,0),3.0f);
+        firstHowToPlayPanel.transform.localPosition = new Vector3(rightCount,0,0);
+        secondHowToPlayPanel.transform.localPosition = new Vector3( rightCount,0,0);
+        resultPanel.transform.localPosition = new Vector3(rightCount,0,0);
         countDownText.gameObject.SetActive(false);
     }
 
@@ -53,10 +56,6 @@ public class TitlePresenter : BaseView
     {
         subscriptions.Add
         (
-            //インゲームが始まる
-
-            //タイトルパネルが移動
-            //ゲームが始まる。
             gameStartBtn.OnClickAsObservable()
                 .Do(_ => titlePanel.DOLocalMove (new Vector3(0,underCount,0),1.0f))
                 .Do(_ => StartCountDown())
@@ -67,7 +66,7 @@ public class TitlePresenter : BaseView
         subscriptions.Add
         (
             enterHowToPlayBtn.OnClickAsObservable()
-                .Do(_ => titlePanel.DOLocalMove (new Vector3(0,underCount,0),1.0f))
+                .Do(_ => titlePanel.DOLocalMove (new Vector3(leftCount,0,0),1.0f))
                 .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f))
                 .Subscribe()
         );
@@ -75,7 +74,7 @@ public class TitlePresenter : BaseView
         subscriptions.Add
         (
             firstNextBtn.OnClickAsObservable()
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,underCount,0),1.0f))
+                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(leftCount,0,0),1.0f))
                 .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f))
                 .Subscribe()
         );
@@ -83,14 +82,14 @@ public class TitlePresenter : BaseView
         (
             firstBackBtn.OnClickAsObservable()
                 .Do(_ => titlePanel.DOLocalMove (new Vector3(0,0,0),1.0f))
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
+                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
                 .Subscribe()
         );
 
         subscriptions.Add
         (
             secondStartBtn.OnClickAsObservable()
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(0,underCount,0),1.0f))
+                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(leftCount,0,0),1.0f))
                 .Do(_ => StartCountDown())
                 //インゲームスタート
                 .Subscribe()
@@ -99,7 +98,7 @@ public class TitlePresenter : BaseView
         (
             secondBackBtn.OnClickAsObservable()
                 .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f))
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
+                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
                 .Subscribe()
         );
 
@@ -108,9 +107,9 @@ public class TitlePresenter : BaseView
             retryBtn.OnClickAsObservable()
                 .Do(_ => StartCountDown())
                 .Do(_ => titlePanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
-                .Do(_ => resultPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
+                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
+                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
+                .Do(_ => resultPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
                 .Subscribe()
         );
 
@@ -119,8 +118,8 @@ public class TitlePresenter : BaseView
             backToTileBtn.OnClickAsObservable()
                 .Do(_ => titlePanel.DOLocalMove (new Vector3(0,0,0),1.0f))
                 .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
-                .Do(_ => resultPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
+                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
+                .Do(_ => resultPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
                 .Subscribe()
         );
     }
