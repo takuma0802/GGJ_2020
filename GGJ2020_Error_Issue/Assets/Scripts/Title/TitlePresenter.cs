@@ -15,10 +15,12 @@ using DG.Tweening;
 
 public class TitlePresenter : BaseView
 {
-    private int upCount = 1500;
-    private int underCount = -1500;
-    private int rightCount = 1000;
-    private int leftCount = -1000;
+    private int upCount = 2600;
+    private int underCount = -2600;
+    private int rightCount = 1400;
+    private int leftCount = -1400;
+
+    //[SerializeField] private RectTransform upCount, underCount, rightCount, leftCount ;
     [SerializeField] Text countDownText;
 
     [Header("Panel")]
@@ -26,104 +28,135 @@ public class TitlePresenter : BaseView
     [SerializeField] RectTransform firstHowToPlayPanel;
     [SerializeField] RectTransform secondHowToPlayPanel;
     [SerializeField] RectTransform resultPanel;
+    [SerializeField] RectTransform inGamePanel;
 
-    [Header("Buttone")]
-    [SerializeField] Button gameStartBtn;
-    [SerializeField] Button enterHowToPlayBtn;
-    [SerializeField] Button firstNextBtn;
-    [SerializeField] Button firstBackBtn;
-    [SerializeField] Button secondStartBtn;
-    [SerializeField] Button secondBackBtn;
-    [SerializeField] Button retryBtn;
-    [SerializeField] Button backToTileBtn;
-    void Start()
+    [Header("Button")]
+    public Button GameStartBtn;
+    public Button EnterHowToPlayBtn;
+    public Button FirstNextBtn;
+    public Button FirstBackBtn;
+    public Button SecondStartBtn;
+    public Button SecondBackBtn;
+    public Button RetryBtn;
+    public Button BackToTitleBtn;
+
+    public void InitView()
     {
-        BtnSubscribe();
-        InitView();
-        // HowToPlayPanelMove();
-    }
-    void InitView()
-    {
+
         titlePanel.transform.localPosition = new Vector3(0,upCount,0);
         titlePanel.DOLocalMove (new Vector3(0,0,0),3.0f);
+
         firstHowToPlayPanel.transform.localPosition = new Vector3(rightCount,0,0);
         secondHowToPlayPanel.transform.localPosition = new Vector3( rightCount,0,0);
-        resultPanel.transform.localPosition = new Vector3(rightCount,0,0);
+        resultPanel.transform.localPosition = new Vector3(0,upCount,0);
+        inGamePanel.transform.localPosition = new Vector3(0,upCount,0);
+
         countDownText.gameObject.SetActive(false);
+        GameStartBtn.interactable = true;
+        EnterHowToPlayBtn.interactable = true;
     }
 
-    void BtnSubscribe()
+    public void ShowTitleFromResult()
     {
-        subscriptions.Add
-        (
-            gameStartBtn.OnClickAsObservable()
-                .Do(_ => titlePanel.DOLocalMove (new Vector3(0,underCount,0),1.0f))
-                .Do(_ => StartCountDown())
-                //ゲーム始まる。
-                .Subscribe()
-        );
+        titlePanel.transform.localPosition = new Vector3(0,upCount,0);
+        titlePanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+        resultPanel.DOLocalMove (new Vector3(0,underCount,0),1.0f);
 
-        subscriptions.Add
-        (
-            enterHowToPlayBtn.OnClickAsObservable()
-                .Do(_ => titlePanel.DOLocalMove (new Vector3(leftCount,0,0),1.0f))
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f))
-                .Subscribe()
-        );
-
-        subscriptions.Add
-        (
-            firstNextBtn.OnClickAsObservable()
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(leftCount,0,0),1.0f))
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f))
-                .Subscribe()
-        );
-        subscriptions.Add
-        (
-            firstBackBtn.OnClickAsObservable()
-                .Do(_ => titlePanel.DOLocalMove (new Vector3(0,0,0),1.0f))
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
-                .Subscribe()
-        );
-
-        subscriptions.Add
-        (
-            secondStartBtn.OnClickAsObservable()
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(leftCount,0,0),1.0f))
-                .Do(_ => StartCountDown())
-                //インゲームスタート
-                .Subscribe()
-        );
-        subscriptions.Add
-        (
-            secondBackBtn.OnClickAsObservable()
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f))
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
-                .Subscribe()
-        );
-
-        subscriptions.Add
-        (
-            retryBtn.OnClickAsObservable()
-                .Do(_ => StartCountDown())
-                .Do(_ => titlePanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
-                .Do(_ => resultPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
-                .Subscribe()
-        );
-
-        subscriptions.Add
-        (
-            backToTileBtn.OnClickAsObservable()
-                .Do(_ => titlePanel.DOLocalMove (new Vector3(0,0,0),1.0f))
-                .Do(_ => firstHowToPlayPanel.DOLocalMove (new Vector3(0,upCount,0),1.0f))
-                .Do(_ => secondHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
-                .Do(_ => resultPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f))
-                .Subscribe()
-        );
+        GameStartBtn.interactable = true;
+        EnterHowToPlayBtn.interactable = true;
+        RetryBtn.interactable = false;
+        BackToTitleBtn.interactable = false;
     }
-    void StartCountDown()
+
+    public void ShowTitleFromFirst()
+    {
+        titlePanel.transform.localPosition = new Vector3(leftCount,0,0);
+        titlePanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+        firstHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f);
+
+        GameStartBtn.interactable = true;
+        EnterHowToPlayBtn.interactable = true;
+        FirstBackBtn.interactable = false;
+        FirstNextBtn.interactable = false;
+    }
+
+    public void ShowFirstHowToPlayFromTitle()
+    {
+        titlePanel.DOLocalMove (new Vector3(leftCount,0,0),1.0f);
+        firstHowToPlayPanel.transform.localPosition = new Vector3(rightCount,0,0);
+        firstHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+
+        GameStartBtn.interactable = false;
+        EnterHowToPlayBtn.interactable = false;
+        FirstBackBtn.interactable = true;
+        FirstNextBtn.interactable = true;
+    }
+
+    public void ShowFirstHowToPlayFromSecond()
+    {
+        secondHowToPlayPanel.DOLocalMove (new Vector3(rightCount,0,0),1.0f);
+        firstHowToPlayPanel.transform.localPosition = new Vector3(leftCount,0,0);
+        firstHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+
+        SecondBackBtn.interactable = false;
+        SecondStartBtn.interactable = false;
+        FirstBackBtn.interactable = true;
+        FirstNextBtn.interactable = true;
+    }
+
+    public void ShowSecondHowToPlay()
+    {
+        firstHowToPlayPanel.DOLocalMove (new Vector3(leftCount,0,0),1.0f);
+        secondHowToPlayPanel.transform.localPosition = new Vector3(rightCount,0,0);
+        secondHowToPlayPanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+
+        SecondBackBtn.interactable = true;
+        SecondStartBtn.interactable = true;
+        FirstBackBtn.interactable = false;
+        FirstNextBtn.interactable = false;
+    }
+
+    public void ShowInGameFromTitle()
+    {
+        inGamePanel.transform.localPosition = new Vector3(0,upCount,0);
+        inGamePanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+        titlePanel.DOLocalMove (new Vector3(0,underCount,0),1.0f);
+
+        GameStartBtn.interactable = false;
+        EnterHowToPlayBtn.interactable = false;
+    }
+
+    public void ShowInGameFromSecond()
+    {
+        inGamePanel.transform.localPosition = new Vector3(0,upCount,0);
+        inGamePanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+        secondHowToPlayPanel.DOLocalMove (new Vector3(0,underCount,0),1.0f);
+
+        SecondBackBtn.interactable = false;
+        SecondStartBtn.interactable = false;
+    }
+
+    public void ShowInGameFromResult()
+    {
+        inGamePanel.transform.localPosition = new Vector3(0,upCount,0);
+        inGamePanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+        resultPanel.DOLocalMove (new Vector3(0,underCount,0),1.0f);
+
+        RetryBtn.interactable = false;
+        BackToTitleBtn.interactable = false;
+    }
+
+    public void ShowResult()
+    {
+        resultPanel.transform.localPosition = new Vector3(0,upCount,0);
+        resultPanel.DOLocalMove (new Vector3(0,0,0),1.0f);
+        inGamePanel.DOLocalMove (new Vector3(0,underCount,0),1.0f);
+
+        RetryBtn.interactable = true;
+        BackToTitleBtn.interactable = true;
+    }
+
+    public void StartCountDown()
     {
         subscriptions.Add
         (

@@ -9,11 +9,11 @@ public class QuestionPagePresenter : MonoBehaviour
     [SerializeField] private List<QuestionView> questionViews;
     [SerializeField] private AnswerView answerView;
 
-
     private List<QuestionMaster> questionMasters;
     private Answer selectableAnswer;
+    public List<IDisposable> subscriptions = new List<IDisposable>();
     private ReactiveProperty<int> currentRow = new IntReactiveProperty(1);
-    private ReactiveProperty<bool> canAnswer = new BoolReactiveProperty(true);
+    private ReactiveProperty<bool> canAnswer = new BoolReactiveProperty(false);
     private int correctNumInCurrentRow;
 
     private Subject<AnswerResult> isCorrectAnswer = new Subject<AnswerResult>();
@@ -22,34 +22,22 @@ public class QuestionPagePresenter : MonoBehaviour
         get { return isCorrectAnswer;}
     }
 
-    void Start()
-    {
-        InitializeQuestionPage(1);
-    }
-
     public void InitializeQuestionPage(int level)
     {
         DisposeAllStreams();
 
+        // ランダムで取りたい
         var currentQuestionTable = QuestionRepository.Instance.GetQuestionTableByIndex(level);
         questionMasters = currentQuestionTable.Questions;
         selectableAnswer = currentQuestionTable.Answer;
 
         for (var i = 0; i < questionMasters.Count; i++)
         {
-            questionViews[i].SetQuestionText(i, questionMasters[i].Qustion);
+            questionViews[i].SetQuestionTextAndRow(i, questionMasters[i].Qustion);
         }
-
-        currentRow.Value = 1;
-        questionViews[currentRow.Value - 1].ActivateRowColor();
 
         answerView.SetButtonText(selectableAnswer.Answers);
         ResisterStreams();
-    }
-
-    public void DisposeAllStreams()
-    {
-
     }
 
     public void ResisterStreams()
@@ -76,6 +64,17 @@ public class QuestionPagePresenter : MonoBehaviour
             .OnClickAsObservable()
             .Where(_ => canAnswer.Value)
             .Subscribe(_ => OnClickEnterButton());
+
+        subscriptions.Add(answerStream1);
+        subscriptions.Add(answerStream2);
+        subscriptions.Add(answerStream3);
+        subscriptions.Add(enterStream);
+    }
+
+    public void StartGame()
+    {
+        questionViews[currentRow.Value - 1].ActivateRowColor();
+        canAnswer.Value = true;
     }
 
     public void CheckAnswer(string answer)
@@ -96,16 +95,16 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void CorrectAnswer()
     {
-        Debug.Log("Correct");
         isCorrectAnswer.OnNext(AnswerResult.SelectCorrectAnswer);
         correctNumInCurrentRow++;
+        SetCorrectQuestionText(currentRow.Value - 1, true);
         SetActiveAnswerButton(true);
     }
 
     public void MistakeAnswer()
     {
-        Debug.Log("Mistake");
         isCorrectAnswer.OnNext(AnswerResult.Mistake);
+        SetCorrectQuestionText(currentRow.Value - 1 , false);
         NextRow();
     }
 
@@ -114,7 +113,7 @@ public class QuestionPagePresenter : MonoBehaviour
         var nextRow = currentRow.Value + 1;
         if (nextRow > questionMasters.Count)
         {
-            Debug.Log("しゅうりょう");
+            FinishGame();
             return;
         }
 
@@ -130,18 +129,24 @@ public class QuestionPagePresenter : MonoBehaviour
     {
         canAnswer.Value = false;
         SetActiveAnswerButton(false);
-        if (correctNumInCurrentRow == questionMasters[currentRow.Value - 1].Answer.Count)
+        var correct = correctNumInCurrentRow == questionMasters[currentRow.Value - 1].Answer.Count;
+        if (correct)
         {
             isCorrectAnswer.OnNext(AnswerResult.CorrectAllAnswer);
-            Debug.Log("CorrectEnter");
         }
         else
         {
             isCorrectAnswer.OnNext(AnswerResult.NotEnoughAnswer);
-            Debug.Log("MisEnter");
         }
 
+        SetCorrectQuestionText(currentRow.Value - 1, correct);
         NextRow();
+    }
+
+    public void SetCorrectQuestionText(int index, bool correct)
+    {
+        var text = questionMasters[index].CorrectText;
+        questionViews[index].SetQuestionText(text,correct);
     }
 
     public void SetActiveAnswerButton(bool flag)
@@ -149,6 +154,18 @@ public class QuestionPagePresenter : MonoBehaviour
         answerView.SetActiveAllButton(flag);
     }
 
+    public void FinishGame()
+    {
+        DisposeAllStreams();
+    }
+
+    public void DisposeAllStreams()
+    {
+        subscriptions.ForEach(s => s.Dispose());
+        correctNumInCurrentRow = 0;
+        currentRow.Value = 1;
+        canAnswer.Value = false;
+    }
 }
 
 

@@ -24,4 +24,5 @@ public class QuestionMaster
 {
   public List<string> Answer;
   public string Qustion;
+  public string CorrectText;
 }
