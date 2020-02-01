@@ -79,6 +79,7 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void CheckAnswer(string answer)
     {
+        AudioManager.Instance.PlaySE(SE.AnyKey.ToString());
         canAnswer.Value = false;
         SetActiveAnswerButton(false);
         var correct = questionMasters[currentRow.Value - 1].Answer.Contains(answer);
@@ -99,12 +100,14 @@ public class QuestionPagePresenter : MonoBehaviour
         correctNumInCurrentRow++;
         SetCorrectQuestionText(currentRow.Value - 1, true);
         SetActiveAnswerButton(true);
+        AudioManager.Instance.PlaySE(SE.Correct.ToString());
     }
 
     public void MistakeAnswer()
     {
         isCorrectAnswer.OnNext(AnswerResult.Mistake);
         SetCorrectQuestionText(currentRow.Value - 1 , false);
+        AudioManager.Instance.PlaySE(SE.Incorrect.ToString());
         NextRow();
     }
 
@@ -127,15 +130,18 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void OnClickEnterButton()
     {
+        AudioManager.Instance.PlaySE(SE.Enter.ToString());
         canAnswer.Value = false;
         SetActiveAnswerButton(false);
         var correct = correctNumInCurrentRow == questionMasters[currentRow.Value - 1].Answer.Count;
         if (correct)
         {
+            AudioManager.Instance.PlaySE(SE.Correct.ToString());
             isCorrectAnswer.OnNext(AnswerResult.CorrectAllAnswer);
         }
         else
         {
+            AudioManager.Instance.PlaySE(SE.Incorrect.ToString());
             isCorrectAnswer.OnNext(AnswerResult.NotEnoughAnswer);
         }
 
