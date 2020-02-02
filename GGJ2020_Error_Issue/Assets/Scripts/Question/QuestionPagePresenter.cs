@@ -4,12 +4,17 @@ using UnityEngine;
 using UniRx;
 using System;
 using System.Linq;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class QuestionPagePresenter : MonoBehaviour
 {
-    [SerializeField] private List<QuestionView> questionViews;
+    [SerializeField] private GameObject questionViewPrefab;
+    [SerializeField] private GameObject questionParentObject;
     [SerializeField] private AnswerView answerView;
+    [SerializeField] private Scrollbar scrollbar;
 
+    private List<QuestionView> questionViews = new List<QuestionView>();
     private List<QuestionMaster> questionMasters;
     private Answer selectableAnswer;
     public List<IDisposable> subscriptions = new List<IDisposable>();
@@ -35,6 +40,9 @@ public class QuestionPagePresenter : MonoBehaviour
 
         for (var i = 0; i < questionMasters.Count; i++)
         {
+            var questionView = Instantiate(questionViewPrefab);
+            questionView.transform.SetParent (questionParentObject.transform, false);
+            questionViews.Add(questionView.GetComponent<QuestionView>());
             questionViews[i].SetQuestionTextAndRow(i, questionMasters[i].Qustion);
         }
 
@@ -122,12 +130,25 @@ public class QuestionPagePresenter : MonoBehaviour
             return;
         }
 
+        if(currentRow.Value % 8 == 0)
+        {
+            StartCoroutine(ScrollPage());
+        }
+
         questionViews[currentRow.Value - 1].NonActivateRowColor();
         currentRow.Value++;
         questionViews[currentRow.Value - 1].ActivateRowColor();
         answeredTextsInCurrentRow.Clear();
         SetActiveAnswerButton(true);
         canAnswer.Value = true;
+    }
+
+    private IEnumerator ScrollPage()
+    {
+        // いつか修正
+        float rate = ((float)currentRow.Value + 1) / questionMasters.Count;
+        scrollbar.value = 1.0f - rate;
+        yield return null;
     }
 
     public void OnClickEnterButton()
