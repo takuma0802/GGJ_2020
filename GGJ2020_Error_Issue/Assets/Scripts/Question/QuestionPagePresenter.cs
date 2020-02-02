@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using System;
+using System.Linq;
 
 public class QuestionPagePresenter : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class QuestionPagePresenter : MonoBehaviour
     private ReactiveProperty<int> currentRow = new IntReactiveProperty(1);
     private ReactiveProperty<bool> canAnswer = new BoolReactiveProperty(false);
     private int correctNumInCurrentRow;
+    private List<string> answeredTextsInCurrentRow = new List<string>();
 
     private Subject<AnswerResult> isCorrectAnswer = new Subject<AnswerResult>();
     public IObservable<AnswerResult> IsCorrectAnswer
@@ -79,13 +81,14 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void CheckAnswer(string answer)
     {
-        AudioManager.Instance.PlaySE(SE.AnyKey.ToString());
+        AudioManager.Instance.PlaySE(SE.Anykey.ToString());
         canAnswer.Value = false;
         SetActiveAnswerButton(false);
-        var correct = questionMasters[currentRow.Value - 1].Answer.Contains(answer);
+        var correct = questionMasters[currentRow.Value - 1].Answer.Contains(answer) && !answeredTextsInCurrentRow.Contains(answer);
         if (correct)
         {
             CorrectAnswer();
+            answeredTextsInCurrentRow.Add(answer);
         }
         else
         {
@@ -97,10 +100,9 @@ public class QuestionPagePresenter : MonoBehaviour
     public void CorrectAnswer()
     {
         isCorrectAnswer.OnNext(AnswerResult.SelectCorrectAnswer);
-        correctNumInCurrentRow++;
         SetCorrectQuestionText(currentRow.Value - 1, true);
         SetActiveAnswerButton(true);
-        AudioManager.Instance.PlaySE(SE.Correct.ToString());
+        AudioManager.Instance.PlaySE(SE.Correct_Small.ToString());
     }
 
     public void MistakeAnswer()
@@ -123,7 +125,7 @@ public class QuestionPagePresenter : MonoBehaviour
         questionViews[currentRow.Value - 1].NonActivateRowColor();
         currentRow.Value++;
         questionViews[currentRow.Value - 1].ActivateRowColor();
-        correctNumInCurrentRow = 0;
+        answeredTextsInCurrentRow.Clear();
         SetActiveAnswerButton(true);
         canAnswer.Value = true;
     }
@@ -133,7 +135,13 @@ public class QuestionPagePresenter : MonoBehaviour
         AudioManager.Instance.PlaySE(SE.Enter.ToString());
         canAnswer.Value = false;
         SetActiveAnswerButton(false);
-        var correct = correctNumInCurrentRow == questionMasters[currentRow.Value - 1].Answer.Count;
+
+        bool correct = true;
+        foreach(var answer in questionMasters[currentRow.Value - 1].Answer)
+        {
+            correct = answeredTextsInCurrentRow.Contains(answer);
+        }
+
         if (correct)
         {
             AudioManager.Instance.PlaySE(SE.Correct.ToString());

@@ -11,8 +11,12 @@ public enum SE
 {
     Incorrect,
     Enter,
-    AnyKey,
+    Anykey,
     Result,
     AnyButton,
-    Correct
+    Correct,
+    Correct_Small,
+    TimeOut,
+    NumberUp,
+    Countdown
 }
