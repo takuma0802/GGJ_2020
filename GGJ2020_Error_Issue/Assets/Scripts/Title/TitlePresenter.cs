@@ -47,12 +47,18 @@ public class TitlePresenter : BaseView
     public void InitView()
     {
         titlePanel.transform.localPosition = new Vector3(0,upCount,0);
-        titlePanel.DOLocalMove (new Vector3(0,0,0),3.0f).SetEase(Ease.OutBack);
-
         firstHowToPlayPanel.transform.localPosition = new Vector3(rightCount,0,0);
         secondHowToPlayPanel.transform.localPosition = new Vector3( rightCount,0,0);
         resultPanel.transform.localPosition = new Vector3(0,upCount,0);
         inGamePanel.transform.localPosition = new Vector3(0,upCount,0);
+
+        titlePanel.gameObject.SetActive(true);
+        firstHowToPlayPanel.gameObject.SetActive(true);
+        secondHowToPlayPanel.gameObject.SetActive(true);
+        resultPanel.gameObject.SetActive(true);
+        inGamePanel.gameObject.SetActive(true);
+
+        titlePanel.DOLocalMove (new Vector3(0,0,0),3.0f).SetEase(Ease.OutBack);
 
         countDownText.gameObject.SetActive(false);
         GameStartBtn.interactable = true;
