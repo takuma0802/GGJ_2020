@@ -49,7 +49,12 @@ public class ScorePresenter : BaseView
 
         AllScore
             .Where(_ => manager.CurrentGameState.Value == GameState.InGame)
-            .Subscribe(score => scoreText.text = score.ToString())
+            .Subscribe(score => AddScore(score))
             .AddTo(this);
+    }
+
+    private void AddScore(int score)
+    {
+        scoreText.text = score.ToString();
     }
 }

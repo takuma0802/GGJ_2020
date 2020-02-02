@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
   [SerializeField] private TitlePresenter titlePresenter;
   [SerializeField] private ScorePresenter scorePresenter;
+  [SerializeField] private TimeManager timeManager;
   [SerializeField] private QuestionPagePresenter questionPagePresenter;
 
   private GameStateReactiveProperty currentState = new GameStateReactiveProperty();
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour
 
   private void InitializeState()
   {
+    timeManager.Initialize();
     questionPagePresenter.InitializeQuestionPage(1);
     scorePresenter.Initialize(questionPagePresenter.IsCorrectAnswer, this);
     currentState.Value = GameState.Ready;
@@ -127,20 +129,45 @@ public class GameManager : MonoBehaviour
   private IEnumerator ReadyState()
   {
     titlePresenter.StartCountDown();
-    yield return new WaitForSeconds(3.0f);
+    yield return new WaitForSeconds(4.0f);
     currentState.Value = GameState.InGame;
   }
 
   private void InGameState()
   {
-    //timeManager.Start();
+    timeManager.StartTimer();
     questionPagePresenter.StartGame();
+
+    timeManager.CountDownObservable
+      .Subscribe(_ => { }, () => {
+        AudioManager.Instance.PlaySE(SE.TimeOut.ToString());
+        questionPagePresenter.FinishGame();
+        currentState.Value = GameState.Result;
+      });
   }
 
   private void ResultState()
   {
-    //scorePresenter
-    AudioManager.Instance.PlaySE(SE.Result.ToString());
+    var score = scorePresenter.AllScore.Value;
+    var judge = JudgeResult(score);
+
     titlePresenter.ShowResult();
+    StartCoroutine(titlePresenter.SetResultCoroutine(score,judge));
+  }
+
+  private int JudgeResult(int score)
+  {
+    if(score > 200)
+    {
+      return 0;
+    }
+    else if (score > 100)
+    {
+      return 1;
+    }
+    else
+    {
+      return 2;
+    }
   }
 }
