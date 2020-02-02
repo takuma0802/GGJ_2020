@@ -8,14 +8,6 @@ public class ShakeView : MonoBehaviour
 
     public void Shake()
     {
-        shake.Shake( 9f, 9f); 
-    }
-
-    void Update()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Shake();
-        }
+        shake.Shake( 9f, 9f);
     }
 }
