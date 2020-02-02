@@ -13,6 +13,7 @@ public class QuestionPagePresenter : MonoBehaviour
     [SerializeField] private GameObject questionParentObject;
     [SerializeField] private AnswerView answerView;
     [SerializeField] private Scrollbar scrollbar;
+    [SerializeField] private ShakeView shakeView;
 
     private List<QuestionView> questionViews = new List<QuestionView>();
     private List<QuestionMaster> questionMasters;
@@ -20,20 +21,26 @@ public class QuestionPagePresenter : MonoBehaviour
     public List<IDisposable> subscriptions = new List<IDisposable>();
     private ReactiveProperty<int> currentRow = new IntReactiveProperty(1);
     private ReactiveProperty<bool> canAnswer = new BoolReactiveProperty(false);
+    private IDisposable takenAnswerTimeDisposable;
     private int correctNumInCurrentRow;
     private List<string> answeredTextsInCurrentRow = new List<string>();
+    private System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
 
-    private Subject<AnswerResult> isCorrectAnswer = new Subject<AnswerResult>();
-    public IObservable<AnswerResult> IsCorrectAnswer
+    private Subject<AnswerResults> currentAnswerResult = new Subject<AnswerResults>();
+    public IObservable<AnswerResults> CurrentAnswerResult
     {
-        get { return isCorrectAnswer;}
+        get { return currentAnswerResult;}
     }
+
+    private ReactiveProperty<int> currentCombo = new IntReactiveProperty(0);
+    private float answerTime;
+
 
     public void InitializeQuestionPage(int level)
     {
         DisposeAllStreams();
 
-        // ランダムで取りたい
+        // ランダムで取りたい => 問題的に無理やった
         var currentQuestionTable = QuestionRepository.Instance.GetQuestionTableByIndex(level);
         questionMasters = currentQuestionTable.Questions;
         selectableAnswer = currentQuestionTable.Answer;
@@ -85,6 +92,7 @@ public class QuestionPagePresenter : MonoBehaviour
     {
         questionViews[currentRow.Value - 1].ActivateRowColor();
         canAnswer.Value = true;
+        stopWatch.Restart();
     }
 
     public void CheckAnswer(string answer)
@@ -107,7 +115,9 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void CorrectAnswer()
     {
-        isCorrectAnswer.OnNext(AnswerResult.SelectCorrectAnswer);
+        currentCombo.Value++;
+        var result = new AnswerResults(AnswerResult.SelectCorrectAnswer,currentCombo.Value, -1);
+        currentAnswerResult.OnNext(result);
         SetCorrectQuestionText(currentRow.Value - 1, true);
         SetActiveAnswerButton(true);
         AudioManager.Instance.PlaySE(SE.Correct_Small.ToString());
@@ -115,9 +125,12 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void MistakeAnswer()
     {
-        isCorrectAnswer.OnNext(AnswerResult.Mistake);
+        currentCombo.Value = 0;
+        var result = new AnswerResults(AnswerResult.Mistake,currentCombo.Value, -1);
+        currentAnswerResult.OnNext(result);
         SetCorrectQuestionText(currentRow.Value - 1 , false);
         AudioManager.Instance.PlaySE(SE.Incorrect.ToString());
+        shakeView.Shake();
         NextRow();
     }
 
@@ -141,6 +154,7 @@ public class QuestionPagePresenter : MonoBehaviour
         answeredTextsInCurrentRow.Clear();
         SetActiveAnswerButton(true);
         canAnswer.Value = true;
+        stopWatch.Restart();
     }
 
     private IEnumerator ScrollPage()
@@ -153,6 +167,9 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void OnClickEnterButton()
     {
+        stopWatch.Stop();
+        var ts = stopWatch.Elapsed;
+        answerTime = ts.Seconds + ts.Milliseconds / 1000;
         AudioManager.Instance.PlaySE(SE.Enter.ToString());
         canAnswer.Value = false;
         SetActiveAnswerButton(false);
@@ -165,13 +182,21 @@ public class QuestionPagePresenter : MonoBehaviour
 
         if (correct)
         {
+
             AudioManager.Instance.PlaySE(SE.Correct.ToString());
-            isCorrectAnswer.OnNext(AnswerResult.CorrectAllAnswer);
+            currentCombo.Value++;
+            var result = new AnswerResults(AnswerResult.CorrectAllAnswer,currentCombo.Value, answerTime);
+            currentAnswerResult.OnNext(result);
+            currentCombo.Value++;
         }
         else
         {
             AudioManager.Instance.PlaySE(SE.Incorrect.ToString());
-            isCorrectAnswer.OnNext(AnswerResult.NotEnoughAnswer);
+            shakeView.Shake();
+            currentCombo.Value = 0;
+            var result = new AnswerResults(AnswerResult.NotEnoughAnswer,currentCombo.Value, answerTime);
+            currentAnswerResult.OnNext(result);
+            currentCombo.Value = 0;
         }
 
         SetCorrectQuestionText(currentRow.Value - 1, correct);
@@ -198,11 +223,27 @@ public class QuestionPagePresenter : MonoBehaviour
     {
         subscriptions.ForEach(s => s.Dispose());
         correctNumInCurrentRow = 0;
+        answerTime = 0;
+        currentCombo.Value = 0;
         currentRow.Value = 1;
         canAnswer.Value = false;
+        stopWatch.Reset();
     }
 }
 
+public struct AnswerResults
+{
+    public AnswerResult IsCorrect;
+    public int CurrentCombo;
+    public float TakenAnswerTime;
+
+   public AnswerResults(AnswerResult isCorrect, int combo, float time)
+   {
+       this.IsCorrect = isCorrect;
+       this.CurrentCombo = combo;
+       this.TakenAnswerTime = time;
+   }
+}
 
 public enum AnswerResult
 {

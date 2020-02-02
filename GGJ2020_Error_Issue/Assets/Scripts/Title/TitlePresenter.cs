@@ -24,7 +24,7 @@ public class TitlePresenter : BaseView
     [SerializeField] Text countDownText;
     [SerializeField] Text scoreResultText, rowResultText ,evaluationResultText;
     [SerializeField] Image evaluationResultImage;
-    [SerializeField] List<Image> evaluationImages;
+    [SerializeField] List<Sprite> evaluationImages;
     [SerializeField] List<String> evaluationTexts;
 
     [Header("Panel")]
@@ -64,10 +64,10 @@ public class TitlePresenter : BaseView
         GameStartBtn.interactable = true;
         EnterHowToPlayBtn.interactable = true;
 
-        scoreResultText.text = "";
-        //rowResultText.text = "";
-        //evaluationResultText.text = "";
-        //evaluationResultImage = null;
+        // scoreResultText.text = "";
+        // rowResultText.text = "";
+        // evaluationResultText.text = "";
+        // evaluationResultImage = null;
     }
 
     public void ShowTitleFromResult()
@@ -179,13 +179,10 @@ public class TitlePresenter : BaseView
         var sequence1 = scoreResultText.DOTextInt (0, score, 0.4f, it => string.Format ("{0:0}", it)).SetEase (Ease.Linear);
         yield return sequence1.WaitForCompletion ();
 
-        // var sequence2 = rowResultText.DOTextInt (0, rowNum, 0.3f, it => string.Format ("{0:0}", it)).SetEase (Ease.Linear);
-        // yield return sequence2.WaitForCompletion ();
-
         yield return new WaitForSeconds(0.5f);
 
         // evaluationResultText.text = evaluationTexts[evaluation];
-        // evaluationResultImage = evaluationImages[evaluation];
+        // evaluationResultImage.sprite = evaluationImages[evaluation];
     }
 
     public void StartCountDown()

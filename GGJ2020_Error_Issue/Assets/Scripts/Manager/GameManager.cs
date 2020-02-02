@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
   {
     timeManager.Initialize();
     questionPagePresenter.InitializeQuestionPage(1);
-    scorePresenter.Initialize(questionPagePresenter.IsCorrectAnswer, this);
+    scorePresenter.Initialize(questionPagePresenter.CurrentAnswerResult, this);
     currentState.Value = GameState.Ready;
   }
 
