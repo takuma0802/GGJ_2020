@@ -38,8 +38,6 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void InitializeQuestionPage(int level)
     {
-        DisposeAllStreams();
-
         // ランダムで取りたい => 問題的に無理やった
         var currentQuestionTable = QuestionRepository.Instance.GetQuestionTableByIndex(level);
         questionMasters = currentQuestionTable.Questions;
@@ -225,6 +223,17 @@ public class QuestionPagePresenter : MonoBehaviour
     public void DisposeAllStreams()
     {
         subscriptions.ForEach(s => s.Dispose());
+        // if(questionViews.Count > 0)
+        // {
+        //     questionViews.ForEach(view => {
+        //         var gameobject = view.gameObject;
+        //         Destroy(view);
+        //         Destroy(gameObject);
+        //     });
+        // }
+
+        // questionViews.Clear();
+        // questionMasters.Clear();
         correctNumInCurrentRow = 0;
         answerTime = 0;
         currentCombo.Value = 0;

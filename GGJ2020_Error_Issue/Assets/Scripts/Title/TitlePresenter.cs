@@ -66,7 +66,7 @@ public class TitlePresenter : BaseView
 
         scoreResultText.text = "";
         evaluationResultText.text = "";
-        evaluationResultImage = null;
+        evaluationResultImage.gameObject.SetActive(false);
     }
 
     public void ShowTitleFromResult()
@@ -179,9 +179,9 @@ public class TitlePresenter : BaseView
         yield return sequence1.WaitForCompletion ();
 
         yield return new WaitForSeconds(0.5f);
-
         evaluationResultText.text = evaluationTexts[evaluation];
         evaluationResultImage.sprite = evaluationImages[evaluation];
+        evaluationResultImage.gameObject.SetActive(true);
     }
 
     public void StartCountDown()
