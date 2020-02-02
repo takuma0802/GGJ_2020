@@ -82,6 +82,6 @@ public class ScorePresenter : BaseView
 
     private void ChangeCombo(int combo)
     {
-        //comboText.text = combo.ToString();
+        comboText.text = combo.ToString();
     }
 }

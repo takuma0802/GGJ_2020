@@ -119,6 +119,7 @@ public class QuestionPagePresenter : MonoBehaviour
         var result = new AnswerResults(AnswerResult.SelectCorrectAnswer,currentCombo.Value, -1);
         currentAnswerResult.OnNext(result);
         SetCorrectQuestionText(currentRow.Value - 1, true);
+        questionViews[currentRow.Value].PlayParticle(2);
         SetActiveAnswerButton(true);
         AudioManager.Instance.PlaySE(SE.Correct_Small.ToString());
     }
@@ -130,6 +131,7 @@ public class QuestionPagePresenter : MonoBehaviour
         currentAnswerResult.OnNext(result);
         SetCorrectQuestionText(currentRow.Value - 1 , false);
         AudioManager.Instance.PlaySE(SE.Incorrect.ToString());
+        questionViews[currentRow.Value].PlayParticle(1);
         shakeView.Shake();
         NextRow();
     }
@@ -182,11 +184,11 @@ public class QuestionPagePresenter : MonoBehaviour
 
         if (correct)
         {
-
             AudioManager.Instance.PlaySE(SE.Correct.ToString());
             currentCombo.Value++;
             var result = new AnswerResults(AnswerResult.CorrectAllAnswer,currentCombo.Value, answerTime);
             currentAnswerResult.OnNext(result);
+            questionViews[currentRow.Value].PlayParticle(0);
             currentCombo.Value++;
         }
         else
@@ -196,6 +198,7 @@ public class QuestionPagePresenter : MonoBehaviour
             currentCombo.Value = 0;
             var result = new AnswerResults(AnswerResult.NotEnoughAnswer,currentCombo.Value, answerTime);
             currentAnswerResult.OnNext(result);
+            questionViews[currentRow.Value].PlayParticle(1);
             currentCombo.Value = 0;
         }
 

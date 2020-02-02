@@ -11,6 +11,7 @@ public class QuestionView : BaseView
 
     [SerializeField] private Color NonActiveRowColor;
     [SerializeField] private Color ActiveRowColor;
+    [SerializeField] private List<ParticleSystem> feedBackParticles;
 
     // エフェクトとかもここでやって良さそう
 
@@ -40,5 +41,10 @@ public class QuestionView : BaseView
     public void NonActivateRowColor()
     {
         this.RowColorImage.color = NonActiveRowColor;
+    }
+
+    public void PlayParticle(int index)
+    {
+        feedBackParticles[index].Play();
     }
 }
