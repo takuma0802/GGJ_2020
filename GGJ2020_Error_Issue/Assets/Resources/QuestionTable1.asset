@@ -15,48 +15,372 @@ MonoBehaviour:
   Answer:
     Answers:
     - ;
-    - '"'
-    - ()
+    - =
+    - '{}'
   Questions:
   - Answer:
     - ;
     Qustion: Debug.Log("Hello World")
     CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
   - Answer:
-    - '"'
-    Qustion: Debug.Log("Hello World);
-    CorrectText: Debug.Log("Hello World<color=#ff0000>"</color>);
+    - =
+    Qustion: int Hensu  1;
+    CorrectText: int Hensu <color=#ff0000>=</color>) 1;
   - Answer:
-    - ()
-    Qustion: Debug.Log"Hello World");
-    CorrectText: 
+    - '{}'
+    Qustion: int[] d = new int[]{ 1, 2, 3 ;
+    CorrectText: int[] d = new int[]{ 1, 2, 3 <color=#ff0000>}</color>;
   - Answer:
     - ;
-    - '"'
-    Qustion: Debug.Log"Hello World)
-    CorrectText: 
+    Qustion: for(int i = 0; i < 10; i++) {Console.Write(i)}
+    CorrectText: for(int i = 0; i < 10; i++) {Console.Write(i)<color=#ff0000>;</color>)}
   - Answer:
     - ;
     - ()
     Qustion: Debug.Log"Hello World"
     CorrectText: 
   - Answer:
-    - ;
-    Qustion: get { return isCorrectAnswer}
-    CorrectText: 
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: 'Console.WriteLine("one"); '
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
   - Answer:
     - ;
-    Qustion: get { return isCorrectAnswer}
-    CorrectText: 
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - =
+    Qustion: while(i = 5){
+    CorrectText: while(i <color=#ff0000>=</color>= 5){
+  - Answer:
+    - ;
+    Qustion: Console.WriteLine();
+    CorrectText: Console.WriteLine()<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: 
+    CorrectText: <color=#ff0000>}</color>
+  - Answer: []
+    Qustion: Debug.Log("Hello World");
+    CorrectText: Debug.Log("Hello World");
+  - Answer: []
+    Qustion: int[] d = new int[]{ 1, 2, 3 };
+    CorrectText: int[] d = new int[]{ 1, 2, 3 };
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: int[] d = new int[]{ 1, 2, 3 ;
+    CorrectText: int[] d = new int[]{ 1, 2, 3 <color=#ff0000>}</color>;
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - =
+    Qustion: if(num = 1){
+    CorrectText: if(num <color=#ff0000>=</color>= 1){
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer: []
+    Qustion: int Hensu  = 1;
+    CorrectText: int Hensu  = 1;
+  - Answer:
+    - '{}'
+    Qustion: while(i == 5)
+    CorrectText: while(i == 5)<color=#ff0000>{</color>
+  - Answer:
+    - ;
+    Qustion: Console.WriteLine()
+    CorrectText: Console.WriteLine()<color=#ff0000>;</color>
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer:
+    - '{}'
+    Qustion: int[] d = new int[]{ 1, 2, 3 ;
+    CorrectText: int[] d = new int[]{ 1, 2, 3 <color=#ff0000>}</color>;
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer: []
+    Qustion: int Hensu  = 1;
+    CorrectText: int Hensu  = 1;
+  - Answer: []
+    Qustion: Debug.Log("Hello World");
+    CorrectText: Debug.Log("Hello World");
+  - Answer:
+    - '{}'
+    Qustion: int[] d = new int[]{ 1, 2, 3 ;
+    CorrectText: int[] d = new int[]{ 1, 2, 3 <color=#ff0000>}</color>;
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: while(i == 5)
+    CorrectText: while(i == 5)<color=#ff0000>{</color>
+  - Answer:
+    - ;
+    Qustion: Console.WriteLine()
+    CorrectText: Console.WriteLine()<color=#ff0000>;</color>
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer:
+    - '{}'
+    Qustion: int[] d = new int[]{ 1, 2, 3 ;
+    CorrectText: int[] d = new int[]{ 1, 2, 3 <color=#ff0000>}</color>;
+  - Answer: []
+    Qustion: int Hensu  = 1;
+    CorrectText: int Hensu  = 1;
+  - Answer:
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer:
+    - '{}'
+    Qustion: while(i == 5)
+    CorrectText: while(i == 5)<color=#ff0000>{</color>
+  - Answer:
+    - ;
+    Qustion: Console.WriteLine()
+    CorrectText: Console.WriteLine()<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: 
+    CorrectText: <color=#ff0000>}</color>
+  - Answer: []
+    Qustion: Debug.Log("Hello World");
+    CorrectText: Debug.Log("Hello World");
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer: []
+    Qustion: int Hensu  = 1;
+    CorrectText: int Hensu  = 1;
+  - Answer:
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer: []
+    Qustion: int Hensu  = 1;
+    CorrectText: int Hensu  = 1;
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: while(i == 5)
+    CorrectText: while(i == 5)<color=#ff0000>{</color>
+  - Answer:
+    - ;
+    Qustion: Console.WriteLine()
+    CorrectText: Console.WriteLine()<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: 
+    CorrectText: <color=#ff0000>}</color>
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer: []
+    Qustion: Debug.Log("Hello World");
+    CorrectText: Debug.Log("Hello World");
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer: []
+    Qustion: Debug.Log("Hello World");
+    CorrectText: Debug.Log("Hello World");
+  - Answer:
+    - '{}'
+    Qustion: while(i == 5)
+    CorrectText: while(i == 5)<color=#ff0000>{</color>
+  - Answer:
+    - ;
+    Qustion: Console.WriteLine()
+    CorrectText: Console.WriteLine()<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: 
+    CorrectText: <color=#ff0000>}</color>
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
   - Answer:
     - ()
-    Qustion: Debug.Log"Hello World");
-    CorrectText: 
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
   - Answer:
-    - ()
-    Qustion: Debug.Log"Hello World");
-    CorrectText: 
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
   - Answer:
-    - ()
-    Qustion: Debug.Log"Hello World");
-    CorrectText: 
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer: []
+    Qustion: Debug.Log("Hello World");
+    CorrectText: Debug.Log("Hello World");
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer: []
+    Qustion: '}'
+    CorrectText: '}'
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - '{}'
+    Qustion: if(num == 1)
+    CorrectText: if(num == 1)<color=#ff0000>{</color>
+  - Answer: []
+    Qustion: Console.WriteLine("one");
+    CorrectText: Console.WriteLine("one");
+  - Answer:
+    - ;
+    Qustion: Debug.Log("Hello World")
+    CorrectText: Debug.Log("Hello World")<color=#ff0000>;</color>
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
+  - Answer: []
+    Qustion: Debug.Log("Hello World");
+    CorrectText: Debug.Log("Hello World");
+  - Answer:
+    - ;
+    Qustion: int Hensu  = 1
+    CorrectText: int Hensu  = 1<color=#ff0000>;</color>
