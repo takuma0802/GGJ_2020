@@ -64,10 +64,9 @@ public class TitlePresenter : BaseView
         GameStartBtn.interactable = true;
         EnterHowToPlayBtn.interactable = true;
 
-        // scoreResultText.text = "";
-        // rowResultText.text = "";
-        // evaluationResultText.text = "";
-        // evaluationResultImage = null;
+        scoreResultText.text = "";
+        evaluationResultText.text = "";
+        evaluationResultImage.gameObject.SetActive(false);
     }
 
     public void ShowTitleFromResult()
@@ -181,8 +180,9 @@ public class TitlePresenter : BaseView
 
         yield return new WaitForSeconds(0.5f);
 
-        // evaluationResultText.text = evaluationTexts[evaluation];
-        // evaluationResultImage.sprite = evaluationImages[evaluation];
+        evaluationResultText.text = evaluationTexts[evaluation];
+        evaluationResultImage.sprite = evaluationImages[evaluation];
+        evaluationResultImage.gameObject.SetActive(true);
     }
 
     public void StartCountDown()

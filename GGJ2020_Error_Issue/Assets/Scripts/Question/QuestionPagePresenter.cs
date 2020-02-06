@@ -38,7 +38,7 @@ public class QuestionPagePresenter : MonoBehaviour
 
     public void InitializeQuestionPage(int level)
     {
-        DisposeAllStreams();
+        //DisposeAllStreams();
 
         // ランダムで取りたい => 問題的に無理やった
         var currentQuestionTable = QuestionRepository.Instance.GetQuestionTableByIndex(level);
@@ -120,6 +120,7 @@ public class QuestionPagePresenter : MonoBehaviour
         currentAnswerResult.OnNext(result);
         SetCorrectQuestionText(currentRow.Value - 1, true);
         SetActiveAnswerButton(true);
+        questionViews[currentRow.Value - 1].PlayParticle(2);
         AudioManager.Instance.PlaySE(SE.Correct_Small.ToString());
     }
 
@@ -130,6 +131,7 @@ public class QuestionPagePresenter : MonoBehaviour
         currentAnswerResult.OnNext(result);
         SetCorrectQuestionText(currentRow.Value - 1 , false);
         AudioManager.Instance.PlaySE(SE.Incorrect.ToString());
+        questionViews[currentRow.Value - 1].PlayParticle(1);
         shakeView.Shake();
         NextRow();
     }
@@ -187,6 +189,7 @@ public class QuestionPagePresenter : MonoBehaviour
             currentCombo.Value++;
             var result = new AnswerResults(AnswerResult.CorrectAllAnswer,currentCombo.Value, answerTime);
             currentAnswerResult.OnNext(result);
+            questionViews[currentRow.Value - 1].PlayParticle(0);
             currentCombo.Value++;
         }
         else
@@ -196,6 +199,7 @@ public class QuestionPagePresenter : MonoBehaviour
             currentCombo.Value = 0;
             var result = new AnswerResults(AnswerResult.NotEnoughAnswer,currentCombo.Value, answerTime);
             currentAnswerResult.OnNext(result);
+            questionViews[currentRow.Value - 1].PlayParticle(0);
             currentCombo.Value = 0;
         }
 
@@ -225,6 +229,7 @@ public class QuestionPagePresenter : MonoBehaviour
         correctNumInCurrentRow = 0;
         answerTime = 0;
         currentCombo.Value = 0;
+        questionViews[currentRow.Value - 1].NonActivateRowColor();
         currentRow.Value = 1;
         canAnswer.Value = false;
         stopWatch.Reset();

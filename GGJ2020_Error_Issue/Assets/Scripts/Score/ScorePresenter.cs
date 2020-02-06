@@ -24,6 +24,7 @@ public class ScorePresenter : BaseView
         scoreText.text = "0";
         AllScore.Value = 0;
         ScoreSubscribe(answerResult,manager);
+        ChangeCombo(0);
 
         AllScore
             .Where(_ => manager.CurrentGameState.Value == GameState.InGame)
@@ -82,6 +83,6 @@ public class ScorePresenter : BaseView
 
     private void ChangeCombo(int combo)
     {
-        //comboText.text = combo.ToString();
+        comboText.text = combo.ToString() + " combo";
     }
 }
